@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Unity Care Clinic - Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -103,6 +104,54 @@
                         Répartition par Département
                     </h3>
                     <!-- diagram department -->
+                     <div class="w-[92%]">
+                        <canvas id="myChart"></canvas>
+                    </div>
+                    <script>
+                        const ctx = document.getElementById('myChart');
+                        const departementnomber = [];
+                        const demaprtmentName = [];
+                        
+                            <?php
+                                while($row = $sqlNomberNepartementResult->fetch_assoc()){
+                                    echo "departementnomber.push(" . $row['totale_dpatient'] . ");";
+                                    echo "demaprtmentName.push('" . $row['demaprtmentName'] . "');";
+                                }
+                                
+                                ?>
+                        
+                        new Chart(ctx, {
+                            type: 'bar',
+                            data: {
+                                labels: demaprtmentName,
+                                datasets: [{
+                                    label: 'Nomber de patients par département',
+                                    data: departementnomber,
+                                    backgroundColor: [
+                                     
+                                        'rgba(54, 162, 235, 0.5)'
+                                        
+                                    ],
+                                    borderColor: [
+                                    
+                                        'rgba(8, 8, 8, 1)',
+                                     
+                                    ],
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                        
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    <!-- ------------------------------------------ -->
+                
                 </div>
 
                 <div class="bg-white p-6 rounded shadow h-80 theme">
@@ -111,9 +160,49 @@
                     </h3>
 
                     <!-- diagram department -->
-                    <div class="w-[100%]">
+                     <div class="w-[100%]">
                         <canvas id="chartPatients"></canvas>
                     </div>
+                    <script>
+                        const ctxPatients = document.getElementById('chartPatients');
+
+                        const nomberGender = [];
+                        const gender = [];
+
+                        
+                            <?php
+                                while($row = $sqlNombergenderResult->fetch_assoc()){
+                                    echo "nomberGender.push(" . $row['numberGender'] . ");";
+                                    echo "gender.push('" . $row['sexe'] . "');";
+                                };
+                                ?>
+                        
+                        
+                        console.log(gender);
+                        
+                        new Chart(ctxPatients, {
+                            type: 'bar',
+                            data: {
+                                labels: gender,
+                                datasets: [{
+                                    label: 'nomber de patients par sexe',
+                                    data: nomberGender,
+                                    backgroundColor: 'rgba(27, 189, 68, 0.32)',
+                                    borderColor: 'rgba(8, 8, 8, 1)',
+                                    borderWidth: 1
+                                }]
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                }
+                            }
+                        });
+                    </script>
+                    <!-- ------------------------------------------ -->
+
                    </div>
 
             </section>
