@@ -1,5 +1,5 @@
 <?php
-    require_once "config.php";
+require_once "config.php";
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -27,7 +27,7 @@
 
                     <div class="w-full flex justify-between items-center mb-4">
                         <h2 class="text-lg font-semibold">Patient File</h2>
-                        <button type="submit" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
+                        <button type="button" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
                     </div>
 
                     <div>
@@ -100,7 +100,7 @@
                 </div>
             </form>
 
-            
+
         </div>
     </div>
 
@@ -137,8 +137,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                    <?php
-                     while ($row = $PatientsResult->fetch_assoc()) {
+                        <?php
+                        while ($row = $PatientsResult->fetch_assoc()) {
                             echo '<tr class="border-b">';
                             echo '<td class="p-3">' . $row["id_patient"] . '</td>';
                             echo '<td class="p-3">' . $row["first_name"] . '</td>';
@@ -156,7 +156,7 @@
                         </td>';
                             echo '</tr>';
                         }
-                    ?>
+                        ?>
 
 
 
@@ -170,4 +170,92 @@
 
 
 </body>
+
 </html>
+
+<!-- ajoute de patients dans la database -->
+<?php
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' ) {
+    $F_nameP = $_POST['first_name'];
+    $L_nameP = $_POST['last_name'];
+    $emailP = $_POST['email'];
+    $adressP = $_POST['address'];
+    $phoneP = $_POST['phone'];
+    $dateP = $_POST['date_birth'];
+    $sexeP = $_POST['gender'];
+    $doctornameP = $_POST['medications'];
+    $departmentnameP = $_POST['Department'];
+
+
+    // requet sql checking
+    $sqlCheckDepartments = "SELECT * FROM departments WHERE department_name = '$departmentnameP';";
+    $CheckDepartmentResult = $conn->query($sqlCheckDepartments);
+    $sqlCheckDoctors = "SELECT * FROM doctors WHERE first_name = '$doctornameP';";
+    $CheckDoctorsResult = $conn->query($sqlCheckDoctors);
+
+    // RÉCUPÉRER ID DEPARTMENT
+    $sqlDept = "SELECT id_department FROM departments WHERE department_name = '$departmentnameP' LIMIT 1";
+    $deptResult = $conn->query($sqlDept);
+    $id_department = ($deptResult && $deptResult->num_rows > 0)
+        ? $deptResult->fetch_assoc()['id_department']
+        : null;
+
+    // RÉCUPÉRER ID DOCTOR
+    $sqlDoc = "SELECT id_doctor FROM doctors WHERE first_name = '$doctornameP' LIMIT 1";
+    $docResult = $conn->query($sqlDoc);
+    $id_doctor = ($docResult && $docResult->num_rows > 0)
+        ? $docResult->fetch_assoc()['id_doctor']
+        : null;
+
+
+    $sqlADDPatient = "INSERT INTO patients  (last_name, first_name, gender, email, date_of_birth, phone_number, address, id_doctor, id_department) VALUES  ('$L_nameP', '$F_nameP', '$sexeP', '$emailP', '$dateP', '$phoneP', '$adressP', '$id_doctor', '$id_department')";
+    if ($CheckDepartmentResult->num_rows > 0 && $CheckDoctorsResult->num_rows > 0) {
+        if ($conn->query($sqlADDPatient)) {
+            echo "
+            <script>
+                Swal.fire({
+                    title: 'Drag me!',
+                    icon: 'success',
+                    draggable: true
+                });
+            </script>";
+        } else {
+            echo "
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href=\"#\">Why do I have this issue?</a>'
+                });
+            </script>
+";
+        }
+    } else {
+        echo "
+            <script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href=\"#\">Why do I have this issue?</a>'
+                });
+            </script>";
+    }
+
+}
+
+?>
+
+<script>
+    const btn = document.getElementById("ajoutePatient");
+    const btnClose = document.getElementById("CloseboxFormulerAjoutePatient");
+    const boxFormulerAjoutePatient = document.getElementById("boxFormulerAjoutePatient");
+    btn.addEventListener("click", () => {
+        boxFormulerAjoutePatient.style.display = "block";
+    });
+    btnClose.addEventListener("click", () => {
+        boxFormulerAjoutePatient.style.display = "none";
+    });
+</script>
