@@ -1,3 +1,11 @@
+<?php
+
+ require_once "src/config.php";
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -69,21 +77,21 @@
                 <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Patients</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                        
+                        <?php echo $PatientsResult->num_rows;?>
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Médecins</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                        
+                        <?php echo $DoctorsResult->num_rows;?>
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded shadow theme" >
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Départements</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                       
+                       <?php echo $DepartmentsResult->num_rows; ?>
                     </p>
                 </div>
 

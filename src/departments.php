@@ -1,4 +1,6 @@
-
+<?php
+    require_once "config.php";
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -72,7 +74,19 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        <?php
+                        while ($row = $DepartmentsResult->fetch_assoc()) {
+                            echo '<tr class="border-b">';
+                            echo '<td class="p-3">' . $row["id_department"] . '</td>';
+                            echo '<td class="p-3">' . $row["department_name"] . '</td>';
+                            echo '<td class="p-3">' . $row["location"] . '</td>';
+                            echo '<td class="p-3 space-x-2">
+                            <a class="text-blue-600" href="#">Éditer</a>
+                            <a class="text-red-600" href="#">Supprimer</a>
+                        </td>';
+                            echo '</tr>';
+                        }
+                        ?>
                     </tbody>
                 </table>
             </section>

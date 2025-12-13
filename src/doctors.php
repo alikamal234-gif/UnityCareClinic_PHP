@@ -1,4 +1,6 @@
-
+<?php
+    require_once "config.php";
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -89,7 +91,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                       
+                       <?php
+                        while ($row = $DoctorsResult->fetch_assoc()) {
+                            echo '<tr class="border-b">';
+                            echo '<td class="p-3">' . $row["id_doctor"] . '</td>';
+                            echo '<td class="p-3">' . $row["first_name"] . '</td>';
+                            echo '<td class="p-3">' . $row["last_name"] . '</td>';
+                            echo '<td class="p-3">' . $row["specialization"] . '</td>';
+                            echo '<td class="p-3">' . $row["phone_number"] . '</td>';
+                            echo '<td class="p-3">' . $row["email"] . '</td>';
+                            echo '<td class="p-3 space-x-2">
+                            <a class="text-blue-600" href="#">Éditer</a>
+                            <a class="text-red-600" href="#">Supprimer</a>
+                        </td>';
+                            echo '</tr>';
+                        }
+                        ?>
                     </tbody>
                 </table>
             </section>
