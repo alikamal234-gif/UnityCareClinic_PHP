@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 
+
 <body class="bg-gray-100">
 
     <div class="flex min-h-screen">
