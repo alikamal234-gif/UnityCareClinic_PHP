@@ -1,6 +1,4 @@
-<?php
-    require_once "config.php";
-?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -13,13 +11,13 @@
 
 <body class="bg-gray-100 relative">
 
-    <div style="display: none;" id="boxFormulerAjoutedoctor" class="absolute inset-0 z-40 bg-[rgba(0,5,0,0.200)] dark:bg-gray-800/80  border-b border-gray-200 dark:border-gray-700">
+    <div style="display: none;" id="boxFormulerAjoutePatient" class="absolute inset-0 z-40 bg-[rgba(0,5,0,0.200)] dark:bg-gray-800/80  border-b border-gray-200 dark:border-gray-700">
 
    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-2xl px-4 pt-6">
 
-    <form id="patientForm"
+    <form id="patientForm" method="post"
           class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 grid grid-cols-1 gap-4">   <!-- Left column -->
-            <div class="space-y-3 md:col-span-1">
+            <div class="space-y-3 md:col-span-1" >
 
                 <div class="w-full flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold">Médecins File</h2>
@@ -43,7 +41,7 @@
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Specialization</label>
-                    <input name="address" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
+                    <input name="Specialization" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                 </div>
 
                 <div>
@@ -73,7 +71,7 @@
 
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-800">Gestion des Médecins</h2>
-                <button type="submit" id="ajouteDoctor" class="px-4 py-2 bg-blue-600 text-white rounded">
+                <button type="submit" id="ajoutePatient" class="px-4 py-2 bg-blue-600 text-white rounded">
                 Ajouter Médecin
             </button>
             </header>
@@ -115,4 +113,7 @@
     </div>
 
 </body>
+
 </html>
+
+<script src="../js/main.js"></script>

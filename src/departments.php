@@ -1,5 +1,7 @@
 <?php
     require_once "config.php";
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -15,7 +17,7 @@
 
 
     
-    <div style="display: none;" id="boxFormulerAjoutedepartment" class="absolute inset-0 z-40 bg-[rgba(0,5,0,0.200)] dark:bg-gray-800/80  border-b border-gray-200 dark:border-gray-700">
+    <div style="display: none;" id="boxFormulerAjoutePatient" class="absolute inset-0 z-40 bg-[rgba(0,5,0,0.200)] dark:bg-gray-800/80  border-b border-gray-200 dark:border-gray-700">
 
    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-2xl px-4 pt-6 theme">
 
@@ -59,7 +61,7 @@
 
             <header class="flex justify-between items-center mb-6">
                 <h2 class="text-3xl font-bold text-gray-800">Gestion des Départements</h2>
-                <button type="submit" id="ajoutedepartment" class="px-4 py-2 bg-blue-600 text-white rounded">
+                <button type="submit" id="ajoutePatient" class="px-4 py-2 bg-blue-600 text-white rounded">
                 Ajouter Départment
             </button>
             </header>
@@ -96,3 +98,4 @@
 
 </body>
 </html>
+<script src=""></script>
