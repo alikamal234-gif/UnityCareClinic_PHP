@@ -1,6 +1,21 @@
 <?php
     require_once "config.php";
+    session_start();
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $nameDepartment = $_POST['name'];
+        $location = $_POST['location'];
 
+        $sqlADDdepartment = "INSERT INTO departments(department_name,location) 
+        VALUES ('$nameDepartment','$location');";
+
+        if($conn->query($sqlADDdepartment)){
+            $_SESSION['successDep'] = "Doctor ajouté avec succès";
+        }else{
+            $_SESSION['errorDep'] = "Erreur lors de l'ajout";
+        }
+        header("Location :" . $_SERVER['PHP_SELF']);
+        exit;
+    }
 
 ?>
 <!DOCTYPE html>
@@ -11,6 +26,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gestion des Départements</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-100 theme">
@@ -21,25 +37,25 @@
 
    <div class="absolute top-0 left-1/2 transform -translate-x-1/2 z-40 w-full max-w-2xl px-4 pt-6 theme">
 
-    <form id="patientForm theme"
+    <form id="patientForm theme" method="post"
           class="bg-white dark:bg-gray-900 p-6 rounded-lg shadow-md border theme border-gray-200 dark:border-gray-700 grid grid-cols-1 gap-4">   <!-- Left column -->
             <div class="space-y-3 md:col-span-1">
 
                 <div class="w-full flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold">Départment File</h2>
-                    <button type="submit" id="boxFormulerAjoutedepartmentClose" class="font-bold ">X</button>
+                    <button type="submit" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
                 </div>
 
                 
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Name :</label>
-                    <input name="last_name" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
+                    <input name="name" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                 </div>
 
                 <div>
                     <label class="block text-sm font-medium mb-1">Localisation</label>
-                    <input type="location" name="email" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
+                    <input type="location" name="location" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                 </div>
 
                 <div class="flex gap-2 mt-4">
@@ -97,4 +113,29 @@
     </div>
 
 </body>
+<?php
+if(isset($_SESSION['successDep'])){
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: '" . $_SESSION['successDep'] . "'
+        });
+    </script>
+    ";
+    unset($_SESSION['successDep']);
+} elseif(isset($_SESSION['errorDep'])){
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Succès',
+            text: '" . $_SESSION['errorDep'] . "'
+        });
+    </script>
+    ";
+}
+?>
 </html>
+<script src="../js/main.js"></script>
