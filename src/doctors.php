@@ -1,4 +1,28 @@
+<?php
 
+session_start();
+        require_once "config.php";
+    // session_start();
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        $F_nameD = $_POST['first_name'];
+        $L_nameD = $_POST['last_name'];
+        $emailD = $_POST['email'];
+        $SpecializationD = $_POST['Specialization'];
+        $phoneD = $_POST['phone'];
+
+        $sqlADDdoctor = "INSERT INTO doctors(first_name,last_name,specialization,phone_number,email) 
+        VALUES ('$F_nameD','$L_nameD','$SpecializationD','$phoneD','$emailD');";
+
+        if($conn->query($sqlADDdoctor)){
+            $_SESSION['successD'] = "Doctor ajouté avec succès";
+        }else{
+            $_SESSION['errorD'] = "Erreur lors de l'ajout";
+        }
+        header("Location : " .$_SERVER['PHP_SELF']);
+        exit;
+    }
+  
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -113,7 +137,35 @@
     </div>
 
 </body>
+<?php
 
+    if(isset($_SESSION["successD"])){
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Succès',
+            text: '" . $_SESSION['successD'] . "'
+        });
+    </script>
+    ";
+    unset($_SERVER["successD"]);
+}
+if (isset($_SESSION['errorD'])){
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Erreur',
+            text: '" . $_SESSION['errorD'] . "'
+        });
+    </script>
+    ";
+    unset($_SESSION['errorD']);
+}
+
+
+?>
 </html>
 
 <script src="../js/main.js"></script>
