@@ -1,45 +1,7 @@
 <?php
-session_start();
-require_once "config.php";
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    $F_nameP = $_POST['first_name'];
-    $L_nameP = $_POST['last_name'];
-    $emailP = $_POST['email'];
-    $adressP = $_POST['address'];
-    $phoneP = $_POST['phone'];
-    $dateP = $_POST['date_birth'];
-    $sexeP = $_POST['gender'];
-    $doctornameP = $_POST['medications'];
-    $departmentnameP = $_POST['Department'];
-
-    $sqlDept = "SELECT id_department FROM departments WHERE department_name='$departmentnameP' LIMIT 1";
-    $deptResult = $conn->query($sqlDept);
-    $id_department = $deptResult?->fetch_assoc()['id_department'] ?? null;
-
-    $sqlDoc = "SELECT id_doctor FROM doctors WHERE first_name='$doctornameP' LIMIT 1";
-    $docResult = $conn->query($sqlDoc);
-    $id_doctor = $docResult?->fetch_assoc()['id_doctor'] ?? null;
-
-    if ($id_department && $id_doctor) {
-        $sqlADDPatient = "INSERT INTO patients
-        (last_name, first_name, gender, email, date_of_birth, phone_number, address, id_doctor, id_department)
-        VALUES
-        ('$L_nameP', '$F_nameP', '$sexeP', '$emailP', '$dateP', '$phoneP', '$adressP', '$id_doctor', '$id_department')";
-
-        if ($conn->query($sqlADDPatient)) {
-            $_SESSION['successP'] = "Patient ajouté avec succès";
-        } else {
-            $_SESSION['errorP'] = "Erreur lors de l'ajout";
-        }
-    } else {
-        $_SESSION['errorP'] = "Docteur ou département introuvable";
-    }
-
-    header("Location: " . $_SERVER['PHP_SELF']);
-    exit;
-}
+require_once "../config.php";
+require_once "../main.php";
+patientsAdd();
 ?>
 
 <!DOCTYPE html>
@@ -118,18 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Docteur</label>
-                        <input name="medications"
-                            class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Départment</label>
-                        <input name="Department"
-                            class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
-                    </div>
-
                     <div class="flex gap-2 mt-4">
                         <input type="submit"
                             class="flex-1 py-2 px-3 bg-green-600 hover:bg-green-700 text-white rounded-md font-medium"
@@ -173,8 +123,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <th class="p-3">date</th>
                             <th class="p-3">phone</th>
                             <th class="p-3">address</th>
-                            <th class="p-3">ID department</th>
-                            <th class="p-3">ID ddoctor</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -189,8 +137,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             echo '<td class="p-3">' . $row["date_of_birth"] . '</td>';
                             echo '<td class="p-3">' . $row["phone_number"] . '</td>';
                             echo '<td class="p-3">' . $row["address"] . '</td>';
-                            echo '<td class="p-3">' . $row["id_department"] . '</td>';
-                            echo '<td class="p-3">' . $row["id_doctor"] . '</td>';
                             echo '<td class="p-3 space-x-2">
                             <a class="text-blue-600" href="#">Éditer</a>
                             <a class="text-red-600" href="#">Supprimer</a>
@@ -247,4 +193,4 @@ if (isset($_SESSION['successP'])) {
 
 <!-- ajoute de patients dans la database -->
 
-<script src="../js/main.js"></script>
+<script src="../../js/main.js"></script>

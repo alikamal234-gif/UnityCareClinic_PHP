@@ -8,7 +8,7 @@
         <ul class="space-y-2 px-4">
 
             <li>
-                <a href="../index.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
+                <a href="../../index.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
                     Dashboard
                 </a>
             </li>

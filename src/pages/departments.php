@@ -1,21 +1,7 @@
 <?php
-    require_once "config.php";
-    session_start();
-    if($_SERVER['REQUEST_METHOD'] == 'POST'){
-        $nameDepartment = $_POST['name'];
-        $location = $_POST['location'];
-
-        $sqlADDdepartment = "INSERT INTO departments(department_name,location) 
-        VALUES ('$nameDepartment','$location');";
-
-        if($conn->query($sqlADDdepartment)){
-            $_SESSION['successDep'] = "Doctor ajouté avec succès";
-        }else{
-            $_SESSION['errorDep'] = "Erreur lors de l'ajout";
-        }
-        header("Location :" . $_SERVER['PHP_SELF']);
-        exit;
-    }
+    require_once "../config.php";
+    require_once "../main.php";
+    departmentADD();
 
 ?>
 <!DOCTYPE html>
@@ -43,7 +29,7 @@
 
                 <div class="w-full flex justify-between items-center mb-4">
                     <h2 class="text-lg font-semibold">Départment File</h2>
-                    <button type="submit" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
+                    <button type="button" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
                 </div>
 
                 
@@ -138,4 +124,4 @@ if(isset($_SESSION['successDep'])){
 }
 ?>
 </html>
-<script src="../js/main.js"></script>
+<script src="../../js/main.js"></script>

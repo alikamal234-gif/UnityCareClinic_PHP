@@ -1,6 +1,6 @@
 <?php
 
- require_once "src/config.php";
+require_once "src/config.php";
 
 
 
@@ -39,26 +39,26 @@
                     </li>
 
                     <li>
-                        <a href="src/patients.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
+                        <a href="src/pages/patients.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
                             Patients
                         </a>
                     </li>
 
                     <li>
-                        <a href="src/doctors.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
+                        <a href="src/pages/doctors.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
                             Médecins
                         </a>
                     </li>
 
                     <li>
-                        <a href="departments.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
+                        <a href="src/pages/departments.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
                             Départements
                         </a>
                     </li>
 
 
                     <li>
-                        <a href="parametre.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
+                        <a href="src/pages/parametre.php" class="block p-2 text-gray-700 hover:bg-gray-200 rounded">
                             Paramètres / Langue
                         </a>
                     </li>
@@ -104,7 +104,7 @@
                         Répartition par Département
                     </h3>
                     <!-- diagram department -->
-                     <div class="w-[92%]">
+                     <!-- <div class="w-[92%]">
                         <canvas id="myChart"></canvas>
                     </div>
                     <script>
@@ -112,12 +112,12 @@
                         const departementnomber = [];
                         const demaprtmentName = [];
                         
-                            <?php
-                                while($row = $sqlNomberNepartementResult->fetch_assoc()){
+                          <?php
+                             /*   while($row = $sqlNomberNepartementResult->fetch_assoc()){
                                     echo "departementnomber.push(" . $row['totale_dpatient'] . ");";
                                     echo "demaprtmentName.push('" . $row['demaprtmentName'] . "');";
                                 }
-                                
+                            */
                                 ?>
                         
                         new Chart(ctx, {
@@ -149,7 +149,7 @@
                                 }
                             }
                         });
-                    </script>
+                    </script> -->
                     <!-- ------------------------------------------ -->
                 
                 </div>
