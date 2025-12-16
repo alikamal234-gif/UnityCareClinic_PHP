@@ -33,7 +33,7 @@
                 </div>
 
                 
-
+            
                 <div>
                     <label class="block text-sm font-medium mb-1">Name :</label>
                     <input name="name" class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />

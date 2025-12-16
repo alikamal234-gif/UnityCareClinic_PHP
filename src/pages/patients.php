@@ -32,18 +32,21 @@ patientsAdd();
                         <h2 class="text-lg font-semibold">Patient File</h2>
                         <button type="button" id="CloseboxFormulerAjoutePatient" class="font-bold ">X</button>
                     </div>
+                    
+
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-1">First Name :</label>
+                        <input name="first_name" 
+                            class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
+                    </div>
 
                     <div>
-                        <label class="block text-sm font-medium mb-1">Prénom :</label>
+                        <label class="block text-sm font-medium mb-1">Last Name :</label>
                         <input name="last_name" required
                             class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                     </div>
 
-                    <div>
-                        <label class="block text-sm font-medium mb-1">Nom :</label>
-                        <input name="first_name"
-                            class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
-                    </div>
 
                     <div>
                         <label class="block text-sm font-medium mb-1">Email</label>
@@ -138,9 +141,9 @@ patientsAdd();
                             echo '<td class="p-3">' . $row["phone_number"] . '</td>';
                             echo '<td class="p-3">' . $row["address"] . '</td>';
                             echo '<td class="p-3 space-x-2">
-                            <a class="text-blue-600" href="#">Éditer</a>
+                            <a id-patientED = ' . $row["id_patient"] . ' class="EditBtn text-blue-600" href="../editpatient.php?id='.$row["id_patient"].'">Éditer</a>
                             <a class="text-red-600" href="#">Supprimer</a>
-                        </td>';
+                        </td>'; 
                             echo '</tr>';
                         }
                         ?>
@@ -194,3 +197,4 @@ if (isset($_SESSION['successP'])) {
 <!-- ajoute de patients dans la database -->
 
 <script src="../../js/main.js"></script>
+
