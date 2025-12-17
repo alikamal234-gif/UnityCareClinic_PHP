@@ -44,25 +44,31 @@ function doctorsADD()
     // session_start();
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
+
             $F_nameD = $_POST['first_name'];
             $L_nameD = $_POST['last_name'];
             $emailD = $_POST['email'];
             $SpecializationD = $_POST['Specialization'];
             $phoneD = $_POST['phone'];
+            $departmentName = $_POST['departmentName'];
             global $conn;
+            if ($F_nameD && $L_nameD && $emailD && $SpecializationD && $phoneD && $departmentName) {
+                $sqlADDdoctor = "INSERT INTO doctors(first_name,last_name,specialization,phone_number,email,id_department)
+        VALUES ('$F_nameD','$L_nameD','$SpecializationD','$phoneD','$emailD',$departmentName);";
 
-            $sqlADDdoctor = "INSERT INTO doctors(first_name,last_name,specialization,phone_number,email) 
-        VALUES ('$F_nameD','$L_nameD','$SpecializationD','$phoneD','$emailD');";
+                if ($conn->query($sqlADDdoctor)) {
+                    $_SESSION['successD'] = "Doctor ajouté avec succès";
+                } else {
+                    $_SESSION['errorD'] = "Erreur lors de l'ajout";
+                }
 
-            if ($conn->query($sqlADDdoctor)) {
-                $_SESSION['successD'] = "Doctor ajouté avec succès";
+                header("Refresh:0");
+
+                exit;
             } else {
-                $_SESSION['errorD'] = "Erreur lors de l'ajout";
+                echo "3mer dakxi deghya";
             }
 
-            header("Refresh:0");
-
-            exit;
         } catch (\Throwable $th) {
             echo $th->getTraceAsString();
 

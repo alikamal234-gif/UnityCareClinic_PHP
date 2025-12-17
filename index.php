@@ -78,80 +78,103 @@ require_once "src/config.php";
                 <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Patients</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                        <?php echo $PatientsResult->num_rows;?>
+                        <?php echo $PatientsResult->num_rows; ?>
                     </p>
                 </div>
 
                 <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Médecins</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                        <?php echo $DoctorsResult->num_rows;?>
+                        <?php echo $DoctorsResult->num_rows; ?>
                     </p>
                 </div>
 
-                <div class="bg-white p-6 rounded shadow theme" >
+                <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-2">Total Départements</h3>
                     <p class="text-3xl font-bold text-gray-900">
-                       <?php echo $DepartmentsResult->num_rows; ?>
+                        <?php echo $DepartmentsResult->num_rows; ?>
                     </p>
                 </div>
 
             </section>
             <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8 theme">
 
-                <div class="bg-white p-6 rounded shadow h-80 theme">
+                <div class="bg-white p-6 rounded shadow theme">
                     <h3 class="text-lg font-semibold text-gray-600 mb-4">
                         Répartition par Département
                     </h3>
-                    <!-- diagram department -->
-                     <!-- <div class="w-[92%]">
-                        <canvas id="myChart"></canvas>
-                    </div>
+                    <!-- Canvas -->
+
                     <script>
-                        const ctx = document.getElementById('myChart');
-                        const departementnomber = [];
-                        const demaprtmentName = [];
-                        
-                          <?php
-                             /*   while($row = $sqlNomberNepartementResult->fetch_assoc()){
-                                    echo "departementnomber.push(" . $row['totale_dpatient'] . ");";
-                                    echo "demaprtmentName.push('" . $row['demaprtmentName'] . "');";
-                                }
-                            */
-                                ?>
-                        
-                        new Chart(ctx, {
-                            type: 'bar',
-                            data: {
-                                labels: demaprtmentName,
-                                datasets: [{
-                                    label: 'Nomber de patients par département',
-                                    data: departementnomber,
-                                    backgroundColor: [
-                                     
-                                        'rgba(54, 162, 235, 0.5)'
-                                        
-                                    ],
-                                    borderColor: [
-                                    
-                                        'rgba(8, 8, 8, 1)',
-                                     
-                                    ],
-                                    borderWidth: 1
-                                }]
-                            },
+                        <?php
+                        $sql = "
+SELECT d.department_name, COUNT(doc.id_doctor) AS total_doctors
+FROM departments d
+LEFT JOIN doctors doc ON d.id_department = doc.id_department
+GROUP BY d.id_department, d.department_name
+ORDER BY d.id_department
+";
+
+                        $result = $conn->query($sql);
+
+                        $departments = [];
+                        $doctorsNumber = [];
+
+                        while ($row = $result->fetch_assoc()) {
+                            $departments[] = $row['department_name'];
+                            $doctorsNumber[] = (int) $row['total_doctors'];
+                        }
+                        ?>
+                        const departments = <?= json_encode($departments) ?>;
+                        const doctorsNumber = <?= json_encode($doctorsNumber) ?>;
+                    </script>
+
+
+                    <canvas id="myChart" width="300" height="200"></canvas>
+
+                    <script>
+                        // DATA
+                        const data = {
+                            labels: departments,
+                            datasets: [{
+                                label: 'Dataset 1',
+                                data: doctorsNumber,
+                                backgroundColor: [
+                                    'red',
+                                    'orange',
+                                    'yellow',
+                                    'green',
+                                    'blue',
+                                    'black',
+                                    'purple'
+                                ]
+                            }]
+                        };
+
+                        // CONFIG
+                        const config = {
+                            type: 'doughnut',
+                            data: data,
                             options: {
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                        
+                                responsive: true,
+                                plugins: {
+                                    legend: { position: 'top' },
+                                    title: {
+                                        display: true,
+                                        text: 'My Doughnut Chart'
                                     }
                                 }
                             }
-                        });
-                    </script> -->
+                        };
+
+                        // CREATE CHART
+                        const myChart = new Chart(
+                            document.getElementById('myChart'),
+                            config
+                        );
+                    </script>
                     <!-- ------------------------------------------ -->
-                
+
                 </div>
 
                 <div class="bg-white p-6 rounded shadow h-80 theme">
@@ -160,7 +183,7 @@ require_once "src/config.php";
                     </h3>
 
                     <!-- diagram department -->
-                     <div class="w-[100%]">
+                    <div class="w-[100%]">
                         <canvas id="chartPatients"></canvas>
                     </div>
                     <script>
@@ -169,17 +192,18 @@ require_once "src/config.php";
                         const nomberGender = [];
                         const gender = [];
 
-                        
-                            <?php
-                                while($row = $sqlNombergenderResult->fetch_assoc()){
-                                    echo "nomberGender.push(" . $row['numberGender'] . ");";
-                                    echo "gender.push('" . $row['sexe'] . "');";
-                                };
-                                ?>
-                        
-                        
+
+                        <?php
+                        while ($row = $sqlNombergenderResult->fetch_assoc()) {
+                            echo "nomberGender.push(" . $row['numberGender'] . ");";
+                            echo "gender.push('" . $row['sexe'] . "');";
+                        }
+                        ;
+                        ?>
+
+
                         console.log(gender);
-                        
+
                         new Chart(ctxPatients, {
                             type: 'bar',
                             data: {
@@ -203,14 +227,15 @@ require_once "src/config.php";
                     </script>
                     <!-- ------------------------------------------ -->
 
-                   </div>
+                </div>
 
             </section>
 
-            
+
         </main>
 
     </div>
 
 </body>
+
 </html>

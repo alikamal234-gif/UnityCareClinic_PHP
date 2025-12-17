@@ -10,11 +10,3 @@ btn.addEventListener("click", () => {
     });
 
 
-// const EditBtn = document.querySelectorAll(".EditBtn");
-
-// EditBtn.forEach(btn => {
-//     btn.addEventListener("click", (e) => {
-//         e.preventDefault();
-
-//     });
-// });

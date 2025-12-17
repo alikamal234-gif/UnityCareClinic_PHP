@@ -3,6 +3,30 @@
     require_once "../main.php";
     departmentADD();
 
+    try{
+        if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+
+    $id = (int) $_GET['id'];
+
+    $sqlDeleteDepartment = "DELETE FROM departments WHERE id_department = $id";
+
+    if ($conn->query($sqlDeleteDepartment)) {
+        $_SESSION['successDep'] = "Doctor supprimé avec succès";
+    } else {
+        $_SESSION['errorDep'] = "Erreur lors de la suppression";
+    }
+
+    header("Location: departments.php");
+    exit;
+}
+    }catch(Exception $e){
+         if ($conn->errno == 1451) {
+            $_SESSION['errorExict'] = "Il y a des médecins liés à ce département";
+        }
+        header(header: "Location: departments.php");
+        exit;
+    }
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -86,7 +110,7 @@
                             echo '<td class="p-3">' . $row["location"] . '</td>';
                             echo '<td class="p-3 space-x-2">
                             <a class="text-blue-600" href="../editdepartment.php?id='. $row["id_department"] .'">Éditer</a>
-                            <a class="text-red-600" href="#">Supprimer</a>
+                            <a class="text-red-600" >Supprimer</a>
                         </td>';
                             echo '</tr>';
                         }
@@ -121,6 +145,18 @@ if(isset($_SESSION['successDep'])){
         });
     </script>
     ";
+    unset($_SESSION['errorDep']);
+}elseif (isset($_SESSION['errorExict'])){
+    echo "
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'error',
+            text: '" . $_SESSION['errorExict'] . "'
+        });
+    </script>
+    ";
+    unset($_SESSION['errorExict']);
 }
 ?>
 </html>

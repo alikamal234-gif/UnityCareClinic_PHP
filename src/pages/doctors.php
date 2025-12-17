@@ -3,8 +3,24 @@ require_once "../main.php";
 require_once "../config.php";
 doctorsADD();
 
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+
+    $id = (int) $_GET['id'];
+
+    $sqlDeleteDoctor = "DELETE FROM doctors WHERE id_doctor = $id";
+
+    if ($conn->query($sqlDeleteDoctor)) {
+        $_SESSION['successD'] = "doctor supprimé avec succès";
+    } else {
+        $_SESSION['errorD'] = "Erreur lors de la suppression";
+    }
+
+    header("Location: doctors.php");
+    exit;
+}
 
 ?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -64,7 +80,16 @@ doctorsADD();
                             class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                     </div>
 
-
+                    <div class="w-40">
+                            <label class="block text-sm font-medium mb-1">Department :</label>
+                            <select name="departmentName"
+                                class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600">
+                                <option value="">--</option>
+                                <?php while($rowNameDepartment = $DepartmentsResult->fetch_assoc()) :?>
+                                <option value="<?= $rowNameDepartment['id_department'] ?>" ><?= $rowNameDepartment['department_name']?> </option>
+                                <?php endwhile ?>
+                            </select>
+                        </div>
 
                     <div class="flex gap-2 mt-4">
                         <button type="submit"
@@ -104,6 +129,7 @@ doctorsADD();
                             <th class="p-3">Spécialité</th>
                             <th class="p-3">Téléphone</th>
                             <th class="p-3">Email</th>
+                            <th class="p-3">Department</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -116,9 +142,17 @@ doctorsADD();
                             echo '<td class="p-3">' . $row["specialization"] . '</td>';
                             echo '<td class="p-3">' . $row["phone_number"] . '</td>';
                             echo '<td class="p-3">' . $row["email"] . '</td>';
+                            try{
+                                $sqlDepartmentName = "SELECT * FROM departments WHERE id_department =" . $row['id_department'] ;
+                            $resultDepartment = $conn->query($sqlDepartmentName);
+                            $rowNameDepartmen = $resultDepartment->fetch_assoc();
+                            echo '<td class="p-3">' . $rowNameDepartmen["department_name"] . '</td>';
+                            }catch(Exception $e){
+                                echo "";
+                            }
                             echo '<td class="p-3 space-x-2">
                             <a class="text-blue-600" href="../editdoctors.php?id='. $row['id_doctor'] .'">Éditer</a>
-                            <a class="text-red-600" href="#">Supprimer</a>
+                            <a class="text-red-600" href="doctors.php?action=delete&id='. $row["id_doctor"] .'">Supprimer</a>
                         </td>';
                             echo '</tr>';
                         }
