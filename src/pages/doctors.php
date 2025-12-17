@@ -34,13 +34,14 @@ doctorsADD();
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium mb-1">Prénom :</label>
+                        <label class="block text-sm font-medium mb-1">First Name :</label>
                         <input name="first_name" required
                             class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                     </div>
 
+
                     <div>
-                        <label class="block text-sm font-medium mb-1">Nom :</label>
+                        <label class="block text-sm font-medium mb-1">Last Name :</label>
                         <input name="last_name"
                             class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                     </div>
@@ -58,7 +59,7 @@ doctorsADD();
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium mb-1">Téléphone</label>
+                        <label class="block text-sm font-medium mb-1">Phone Number</label>
                         <input name="phone"
                             class="w-full p-2 rounded-md border bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600" />
                     </div>
@@ -116,7 +117,7 @@ doctorsADD();
                             echo '<td class="p-3">' . $row["phone_number"] . '</td>';
                             echo '<td class="p-3">' . $row["email"] . '</td>';
                             echo '<td class="p-3 space-x-2">
-                            <a class="text-blue-600" href="#">Éditer</a>
+                            <a class="text-blue-600" href="../editdoctors.php?id='. $row['id_doctor'] .'">Éditer</a>
                             <a class="text-red-600" href="#">Supprimer</a>
                         </td>';
                             echo '</tr>';

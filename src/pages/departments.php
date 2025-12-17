@@ -85,7 +85,7 @@
                             echo '<td class="p-3">' . $row["department_name"] . '</td>';
                             echo '<td class="p-3">' . $row["location"] . '</td>';
                             echo '<td class="p-3 space-x-2">
-                            <a class="text-blue-600" href="#">Éditer</a>
+                            <a class="text-blue-600" href="../editdepartment.php?id='. $row["id_department"] .'">Éditer</a>
                             <a class="text-red-600" href="#">Supprimer</a>
                         </td>';
                             echo '</tr>';
