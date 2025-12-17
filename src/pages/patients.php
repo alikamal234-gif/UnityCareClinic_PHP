@@ -2,6 +2,23 @@
 require_once "../config.php";
 require_once "../main.php";
 patientsAdd();
+
+if (isset($_GET['action']) && $_GET['action'] === 'delete' && isset($_GET['id'])) {
+
+    $id = (int) $_GET['id'];
+
+    $sqlDeletePatient = "DELETE FROM patients WHERE id_patient = $id";
+
+    if ($conn->query($sqlDeletePatient)) {
+        $_SESSION['successP'] = "Patient supprimé avec succès";
+    } else {
+        $_SESSION['errorP'] = "Erreur lors de la suppression";
+    }
+
+    header("Location: patients.php");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -142,7 +159,11 @@ patientsAdd();
                             echo '<td class="p-3">' . $row["address"] . '</td>';
                             echo '<td class="p-3 space-x-2">
                             <a id-patientED = ' . $row["id_patient"] . ' class="EditBtn text-blue-600" href="../editpatient.php?id='.$row["id_patient"].'">Éditer</a>
-                            <a class="text-red-600" href="#">Supprimer</a>
+                            <a href="patients.php?action=delete&id='. $row["id_patient"] .'"
+   class="text-red-600"
+   onclick="return confirm("Are you sure?")">
+   Supprimer
+</a>
                         </td>'; 
                             echo '</tr>';
                         }
