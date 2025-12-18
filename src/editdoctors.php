@@ -2,7 +2,6 @@
 require_once "config.php";
 require_once "main.php";
 
-session_start();
 
 
 if ($_GET['id']) {

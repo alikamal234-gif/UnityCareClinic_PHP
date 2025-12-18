@@ -37,6 +37,7 @@
     <title>Gestion des Départements</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="bg-gray-100 theme">
@@ -161,3 +162,10 @@ if(isset($_SESSION['successDep'])){
 ?>
 </html>
 <script src="../../js/main.js"></script>
+<script>
+$(document).ready(function(){
+  $("button").click(function(){
+    $("#div1").load("demo_test.txt");
+  });
+});
+</script>
