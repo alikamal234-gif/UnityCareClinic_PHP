@@ -2,6 +2,10 @@
 
 require_once "src/config.php";
 
+if (!($_SESSION['user_id']==1)) {
+    header("Location: LoginSignUp/login.php");
+}
+
 
 
 ?>

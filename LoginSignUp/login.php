@@ -1,23 +1,44 @@
 <?php
-
 require_once '../src/config.php';
 
-if($_SERVER['REQUEST_METHOD']=='POST'){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $sqlLoginAdmin = "SELECT * FROM users";
-    $stmLogin = $conn->query($sqlLoginAdmin);
-    if($rowLogin = $stmLogin->fetch_assoc() > 0){
-        $rowLogin = $stmLogin->fetch_assoc();
-        if($email == $rowLogin['email'] && $password == $rowLogin['password']){
-            header("Location: ../index.php");
-            exit;
-        }
-    }
-    
-    
-}
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    $email = $_POST['email'] ?? '';
+    $password = $_POST['password'] ?? '';
+
+    $stmt = $conn->prepare("SELECT id, email, password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+
+    $stmt->bind_result($id, $email_db, $password_db);
+
+    if ($stmt->fetch()) {
+
+        if ($password == $password_db) {
+
+            $_SESSION['user_id'] = $id;
+            $_SESSION['email'] = $email_db;
+
+            echo "✅ LOGIN OK<br>";
+            echo $_SESSION['user_id'];
+            if($_SESSION['user_id'] == 1){
+                header("Location: ../index.php");
+                exit;
+            }else{
+                header("Location: ../mainUsers.php");
+                exit;
+            }
+
+        } else {
+            echo "❌ Mot de passe incorrect $password_db";
+        }
+
+    } else {
+        echo "❌ Email غير موجود";
+    }
+
+    $stmt->close();
+}
 ?>
 
 <!DOCTYPE html>
