@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['user_id'] = $id;
             $_SESSION['email'] = $email_db;
 
-            echo "✅ LOGIN OK<br>";
-            echo $_SESSION['user_id'];
             if($_SESSION['user_id'] == 1){
                 header("Location: ../index.php");
                 exit;
@@ -30,11 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
 
         } else {
-            echo "❌ Mot de passe incorrect $password_db";
+            echo "le Mot de pass incorrect";
         }
 
     } else {
-        echo "❌ Email غير موجود";
+        echo "email ne trouve pas";
     }
 
     $stmt->close();
